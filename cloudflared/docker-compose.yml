@@ -1,0 +1,13 @@
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel run homelab
+    volumes:
+      - /home/homelab/.cloudflared:/etc/cloudflared:ro
+    networks:
+      - proxy
+networks:
+  proxy:
+    external: true
