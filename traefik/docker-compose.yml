@@ -5,10 +5,18 @@ services:
     restart: unless-stopped
     command:
       - "--api.insecure=false"
+      - "--api.dashboard=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.network=proxy"
       - "--entrypoints.web.address=:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`${TRAEFIK_DASHBOARD_HOST}`)"
+      - "traefik.http.routers.traefik-dashboard.entrypoints=web"
+      - "traefik.http.routers.traefik-dashboard.service=api@internal"
+      - "traefik.http.middlewares.auth.basicatuh.users=${TRAEFIK_DASHBOARD_AUTH}"
+      - "traefik.http.routers.traefik-dashboard.middlewares=auth"
     ports:
       - "80:80"
       - "8080:8080"
