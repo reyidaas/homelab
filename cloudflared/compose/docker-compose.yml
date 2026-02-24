@@ -1,3 +1,4 @@
+name: cloudflared
 services:
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -8,7 +9,6 @@ services:
       - /opt/homelab/.cloudflared/cert.pem:/etc/cloudflared/cert.pem:ro
       - /opt/homelab/.cloudflared/config.yml:/etc/cloudflared/config.yml:ro
       - /opt/homelab/.cloudflared/${TUNNEL_ID}.json:/etc/cloudflared/${TUNNEL_ID}.json:ro
-
     networks:
       - proxy
 networks:

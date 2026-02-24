@@ -1,3 +1,4 @@
+name: drone
 services:
   drone-server:
     image: drone/drone:2

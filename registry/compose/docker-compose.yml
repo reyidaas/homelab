@@ -1,3 +1,4 @@
+name: registry
 services:
   registry:
     image: registry:3
