@@ -44,6 +44,23 @@ services:
       - registry
     networks:
       - proxy
+  registry-backup:
+    image: mazzolino/restic:latest
+    container_name: registry-backup
+    restart: unless-stopped
+    environment:
+      - BACKUP_CRON=15 1 * * *
+      - RESTIC_REPOSITORY=${RESTIC_REPOSITORY}/registry
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - RESTIC_PASSWORD=${RESTIC_PASSWORD}
+      - RESTIC_BACKUP_ARGS=--verbose --tag registry
+      - RESTIC_FORGET_ARGS=--keep-daily 7 --keep-weekly 4 --keep-monthly 6 --prune
+      - TZ=Europe/Warsaw
+    volumes:
+      - registry-data:/data/images:ro
+      - /opt/homelab/registry/auth:/data/auth:ro
+      - ./:/data/compose:ro
 volumes:
   registry-data:
 networks:

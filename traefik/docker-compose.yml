@@ -28,11 +28,12 @@ services:
     container_name: traefik-backup
     restart: unless-stopped
     environment:
-      - BACKUP_CRON=0 2 * * *
+      - BACKUP_CRON=0 1 * * *
       - RESTIC_REPOSITORY=${RESTIC_REPOSITORY}/traefik
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - RESTIC_PASSWORD=${RESTIC_PASSWORD}
+      - RESTIC_BACKUP_ARGS=--verbose --tag traefik
       - RESTIC_FORGET_ARGS=--keep-daily 7 --keep-weekly 7 --keep-monthly 6 --prune
       - TZ=Europe/Warsaw
     volumes:
