@@ -1,0 +1,3 @@
+#!/bin/bash
+current_dir=$(pwd)
+docker compose --env-file /opt/homelab/.env.backup --env-file ${current_dir}/.env -f ${current_dir}/docker-compose.yml up
